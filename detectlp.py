@@ -59,21 +59,23 @@ def merge_mean_color(graph, src, dst):
                                      graph.node[dst]['pixel count'])
 
 def showResult(img,
-               labels):
+               labels,
+               Debug=False):
     out = color.label2rgb(labels, img, kind='avg')
-    print('level1 segments: {}'.format(len(np.unique(labels))))
-    #mark = segmentation.mark_boundaries(out, labels, (1, 0, 0))
-    fig, ax = plt.subplots(ncols=2, sharex=True, sharey=True, figsize=(10, 12))
-    
-    ax[0].imshow(img)
-    ax[1].imshow(out)
-    #ax[2].imshow(mark)
-    
-    for a in ax:
-        a.axis('off')
-    
-    plt.tight_layout()
-    
+    if Debug:
+        print('level1 segments: {}'.format(len(np.unique(labels))))
+        #mark = segmentation.mark_boundaries(out, labels, (1, 0, 0))
+        fig, ax = plt.subplots(ncols=2, sharex=True, sharey=True, figsize=(10, 12))
+        
+        ax[0].imshow(img)
+        ax[1].imshow(out)
+        #ax[2].imshow(mark)
+        
+        for a in ax:
+            a.axis('off')
+        
+        plt.tight_layout()
+        
     return out
 
 def seg(img,
@@ -89,10 +91,10 @@ def seg(img,
         labels = segmentation.felzenszwalb(img, scale=100, sigma=0.5, min_size=50)
     elif Level == "Watershed":
         gradient = sobel(rgb2gray(img))
-        labels = segmentation.watershed(gradient, markers=250, compactness=0.001)
-    print("level1 took ",int(time.time() * 1000 - start),"ms")
+        labels = segmentation.watershed(gradient, markers=250, compactness=0.001)    
     # Show Result
     if Debug:
+        print("level1 took ",int(time.time() * 1000 - start),"ms")
         showResult(img,labels)
     return labels
            
@@ -112,7 +114,7 @@ def refineLabels(labels,
         
     match = sorted(match,reverse=True)
     match = np.array(match)
-    print(match.shape)
+    # refine howmany
     howmany = howmany if howmany < match.shape[0] else match.shape[0]
     # select labels with enough corners    
     pickup = []
@@ -149,9 +151,11 @@ def changebgcolr(img,
 def DetectLP(path):
     # Load
     origin = cv2.imread(path)
+    if origin is None:
+        return None
     # Resize
     h,w,c = origin.shape
-    img = cv2.resize(origin,((w*200)/h,200))
+    img = cv2.resize(origin,(int(w*200/h),200))
     # Blur
     blur = cv2.GaussianBlur(img,(5,5),3)
     
@@ -168,6 +172,8 @@ def DetectLP(path):
     labels = refineLabels(labels,corners,howmany=20)
     # Show Result
     out = showResult(skimg,labels)
+    if out is None:
+        return None
     changebgcolr(out,labels)
     # Blue Color Filter
     gray = cv2.cvtColor(skimage2opencv(out),cv2.COLOR_BGR2GRAY)

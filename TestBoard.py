@@ -32,7 +32,8 @@ def contour2box(contour):
     return box
 
 def estimateColr(img,
-                 rect):
+                 rect,
+                 Debug=False):
     [x, y, w, h] = rect
     roi = img[y:y+h, x:x+w]
     rgb = cv2.cvtColor(roi,cv2.COLOR_BGR2RGB)
@@ -42,13 +43,15 @@ def estimateColr(img,
             totalcolr += rgb[j,i]
     pixelcount = w * h
     avergecolr = totalcolr / pixelcount
-    print avergecolr
+    if Debug:
+        print(avergecolr)
     hsv = rgb2hsv(avergecolr)
     return checkBlue(hsv) or checkYellow(hsv)
     
 def ContourFiltering(img,
                      mask,
-                     contours):
+                     contours,
+                     Debug=False):
     height,width = mask.shape
     refined = []
     for contour in contours:
@@ -60,7 +63,8 @@ def ContourFiltering(img,
         w = np.linalg.norm(box[0]-box[1])
         h = np.linalg.norm(box[1]-box[2])
         ratio = float(w) / h
-        print "ContourFiltering,approx,ratio:\n", approx,ratio
+        if Debug:
+            print("ContourFiltering,approx,ratio:\n", approx,ratio)
         if len(approx) > 3 and len(approx) < 7 and\
             (ratio > 1.3 or ratio < 0.75) and \
             estimateColr(img,boundingRect):
@@ -81,7 +85,7 @@ def ContourFiltering(img,
     '''
 def findBBox(img,
              mask,
-             Debug=True):
+             Debug=False):
     # Dilate
     kernel = np.ones((3,3),np.uint8)
     ##opening = cv2.morphologyEx(thresh,cv2.MORPH_OPEN,kernel, iterations = 2)
@@ -110,14 +114,14 @@ def drawBBox(img,
             Debug = False):
 
     if box is None:
-        print "BBox is None"
+        print("BBox is None")
         return
     cv2.drawContours(img,[box],-1,(0,0,255),2)     
     # Direction Line ?x,y?y,x
-    pt1 = ((box[0][0] + box[3][0]) / 2,(box[0][1] + box[3][1]) / 2)
-    pt2 = ((box[1][0] + box[2][0]) / 2,(box[1][1] + box[2][1]) / 2)
-    pt3 = ((box[0][0] + box[1][0]) / 2,(box[0][1] + box[1][1]) / 2)
-    pt4 = ((box[2][0] + box[3][0]) / 2,(box[2][1] + box[3][1]) / 2)
+    pt1 = (int((box[0][0] + box[3][0]) / 2),int((box[0][1] + box[3][1]) / 2))
+    pt2 = (int((box[1][0] + box[2][0]) / 2),int((box[1][1] + box[2][1]) / 2))
+    pt3 = (int((box[0][0] + box[1][0]) / 2),int((box[0][1] + box[1][1]) / 2))
+    pt4 = (int((box[2][0] + box[3][0]) / 2),int((box[2][1] + box[3][1]) / 2))
     if np.linalg.norm(np.array(pt1)-np.array(pt2)) > np.linalg.norm(np.array(pt3)-np.array(pt4)):
         img = cv2.line(img,pt1,pt2,(0,255,0),2)
     else:

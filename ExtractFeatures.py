@@ -66,7 +66,7 @@ def refinedGoodFeatures(colr,
                         Debug=False):
     size=500.0
     h,w,c = colr.shape
-    img = cv2.resize(colr,(w*int(size)/h,int(size)))
+    img = cv2.resize(colr,(int(w*size/h),int(size)))
     img = Denoise(img)
     fspace = FeatureSpace(img)         # preprocess to get grayscale and threshold images
     corners =  goodFeatures(fspace)

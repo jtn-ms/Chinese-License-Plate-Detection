@@ -19,10 +19,10 @@ def EqualizeHist(img,
     img = cv2.cvtColor(img2,returntype)
     return img    
 
-def hsv2rgb((h, s, v)):
-    h = float(h)
-    s = float(s)
-    v = float(v)
+def hsv2rgb(hsv):
+    h = float(hsv[0])
+    s = float(hsv[1])
+    v = float(hsv[2])
     h60 = h / 60.0
     h60f = math.floor(h60)
     hi = int(h60f) % 6
@@ -40,8 +40,8 @@ def hsv2rgb((h, s, v)):
     r, g, b = int(r * 255), int(g * 255), int(b * 255)
     return r, g, b
     
-def rgb2hsv((r, g, b)):
-    r, g, b = r/255.0, g/255.0, b/255.0
+def rgb2hsv(rgb):
+    r, g, b = rgb[0]/255.0, rgb[1]/255.0, rgb[2]/255.0
     mx = max(r, g, b)
     mn = min(r, g, b)
     df = mx-mn

@@ -19,8 +19,8 @@ from Denoise import Denoise
 
 from RGB2HSV import rgb2hsv,opencv2skimage,checkBlue,EqualizeHist
 #
-dataset_path = "/media/ubuntu/Investigation/DataSet/Image/Classification/Insurance/Insurance/Tmp/LP/"
-filename = "12.jpg"
+dataset_path = "./sample/"
+filename = "11.jpg"
 fullpath = dataset_path + filename
 
 def _weight_mean_color(graph, src, dst, n):
@@ -100,7 +100,7 @@ def Segmentation(img = io.imread(fullpath),
     if Levels == 1:
         if Debug:
             io.imshow(out1)
-            print labels1
+            print(labels1)
         return out1,labels1
 
     # Level2
@@ -124,8 +124,8 @@ def Segmentation(img = io.imread(fullpath),
         out2 = segmentation.mark_boundaries(out2, labels2, (1, 1, 0))
 
     if Debug:
-        print labels1
-        print labels2        
+        print(labels1)
+        print(labels2)       
         fig, ax = plt.subplots(nrows=3, sharex=True, sharey=True, figsize=(10, 12))
         print('level1 segments: {}'.format(len(np.unique(labels1))))
         print('level2 segments: {}'.format(len(np.unique(labels2))))
@@ -212,7 +212,7 @@ if __name__ == "__main__":
     origin = Denoise(origin)
     # Resize
     h,w,c = origin.shape
-    img = cv2.resize(origin,((w*120)/h,120))
+    img = cv2.resize(origin,(int(w*120/h),120))
     # equalization
     #img = EqualizeHist(img)
     # Blur
@@ -222,4 +222,4 @@ if __name__ == "__main__":
                                  Debug=True,
                                  Levels=2,
                                  useBounday = False)
-    print "Total time spent : ",(time.time() * 1000 - start),"ms"
+    print("Total time spent : ",(time.time() * 1000 - start),"ms")

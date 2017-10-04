@@ -1,10 +1,10 @@
 # Main.py
 
-from DetectLP import DetectLP
+from detectlp import DetectLP
 
 ##
 dataset_path = "./sample/"
-filename = "19.jpg"
+filename = "1.jpg"
 fullpath = dataset_path + filename
 ###
 
