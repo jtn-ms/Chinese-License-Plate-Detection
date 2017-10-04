@@ -183,9 +183,14 @@ def DetectLP(path):
     ret2,fmask = cv2.threshold(gray2,0,255,cv2.THRESH_BINARY)
     #mask = cv2.min(fmask,mask)
     # Find Candidate
-    box = findBBox(img,mask)   
+    bbox = findBBox(img,mask)   
     # Check Candidate
-    drawBBox(img,box,Debug=True)
+    drawBBox(img,bbox,Debug=True)
+    #
+    return bbox
 
+import sys
 if __name__ == "__main__":
-    DetectLP(fullpath)
+    path =  sys.argv[1]
+    bbox = DetectLP(path)#DetectLP(fullpath)
+    print(bbox)
