@@ -90,7 +90,7 @@ def seg(img,
     elif Level == "Watershed":
         gradient = sobel(rgb2gray(img))
         labels = segmentation.watershed(gradient, markers=250, compactness=0.001)
-    print "level1 took ",int(time.time() * 1000 - start),"ms"
+    print("level1 took ",int(time.time() * 1000 - start),"ms")
     # Show Result
     if Debug:
         showResult(img,labels)

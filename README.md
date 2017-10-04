@@ -8,7 +8,7 @@
   
 # Usage
   
-    python detect.py image.jpg
+    python detectlp.py image.jpg
   
 # License
   THE SOURCE IS UNDER MIT LICENSE.

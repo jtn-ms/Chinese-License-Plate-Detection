@@ -3,7 +3,7 @@
 from DetectLP import DetectLP
 
 ##
-dataset_path = "/media/ubuntu/Investigation/DataSet/Image/Classification/Insurance/Insurance/Tmp/LP/"
+dataset_path = "./sample/"
 filename = "19.jpg"
 fullpath = dataset_path + filename
 ###
