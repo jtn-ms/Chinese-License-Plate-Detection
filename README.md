@@ -18,4 +18,4 @@
   Thanks to @skimage and @opencv
   
 # Contact
-  If any problem, contant falcon0125@163.com
+  If any problem, contact falcon0125@163.com
