@@ -3,9 +3,13 @@
   This job is started by a vehicle insurance company. The project is just a small part of the whole project. To localize the license plate accurately is asked.
   The project is under development.
   
-# Achievement
+# Pros & Cons
 
+### Pros
   Traditional Methods such as quickshift algorithm and feature based string-region estimation are used, but very reliable. The result is better than many commerial chinese plate detection engines.
+  
+### Cons
+  Speed Problem exists.
   
 # Usage
   
