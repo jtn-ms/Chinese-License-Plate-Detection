@@ -1,6 +1,7 @@
 # Motivation
 
   This job is started by a vehicle insurance company. The project is just a small part of the whole project. To localize the license plate accurately is asked.
+  The project is under development.
   
 # Achievement
 
@@ -15,3 +16,6 @@
   
 # Acknowledgement
   Thanks to @skimage and @opencv
+  
+# Contact
+  If any problem, contant falcon0125@163.com
