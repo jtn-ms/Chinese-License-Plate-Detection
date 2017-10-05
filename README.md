@@ -5,7 +5,7 @@
   
 # Achievement
 
-  Traditional Methods such as quickshift algorithm and feature based string-region estimation are used, but very reliable. The result is better than many commerial chinese plate detection engine including openalpr's commercial chinese License plate recognition.
+  Traditional Methods such as quickshift algorithm and feature based string-region estimation are used, but very reliable. The result is better than many commerial chinese plate detection engines.
   
 # Usage
   
